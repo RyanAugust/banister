@@ -3,23 +3,23 @@ from scipy import optimize
 import math
 import json
 #                                 k1,         k2,        p0,     CTLS,  ATLS
-sample_inputs = {'initial_guess':[0.5,        0.5,       58,      45,      7]
-                 ,'bounds':      [(.1,1.90), (.1,2.90), (50,70), (30,50), (5,12)]}
+# sample_inputs = {'initial_guess':[0.5,        0.5,       58,      45,      7]
+#                  ,'bounds':      [(.1,1.90), (.1,2.90), (50,70), (30,50), (5,12)]}
 
 
 class banister(object):
-    def __init__(self, params=[0.1, 0.5, 50, 45, 7], ctlatl_start=0):
+    def __init__(self, params, ctlatl_start=0):
         self.params = params
         self.ctls = []
         self.atls = []
         self.ctlatl_start = [ctlatl_start]
     
-    def model(self, load_metric, params=[]):
+    def model(self, load_metric, params):
         if len(params) != 5:
             params = self.params
         self.params = params
         
-        self.ctls = self.atls = self.ctlatl_start # why?
+        self.ctls = self.atls = self.ctlatl_start 
         Banister_Predictions = np.array([])
         for i in range(len(load_metric)):
             ctl = (load_metric[i] * (1-math.exp(-1/params[3]))) + (self.ctls[i] * (math.exp(-1/params[3])))
