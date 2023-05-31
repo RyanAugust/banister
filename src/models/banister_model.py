@@ -8,16 +8,16 @@ import json
 
 
 class banister_model(object):
-    def __init__(self, params, ctlatl_start=0):
-        self.params = params
+    def __init__(self, ctlatl_start=0):
+        self.params = []
         self.ctls = []
         self.atls = []
         self.ctlatl_start = [ctlatl_start]
     
     def model(self, load_metric, params):
-        if len(params) != 5:
-            params = self.params
-        self.params = params
+        # if len(params) != 5:
+        #     params = self.params
+        # self.params = params
         
         self.ctls = self.atls = self.ctlatl_start 
         Banister_Predictions = np.array([])
@@ -41,13 +41,13 @@ class banister_model(object):
         return MAE
     
     def fit(self, load_metric, performance_metric, initial_guess, bounds=bounds):
-        individual_banister_model = optimize.minimize(optimize_banister
+        self.individual_banister_model = optimize.minimize(optimize_banister
                                                     ,x0=initial_guess
                                                     ,bounds=bounds
                                                     # ,method='Nelder-Mead'
                                                     # ,tol=1e-8
                                                     )
-        print(individual_banister_model)
-        for val in individual_banister_model['x']:
+        print(self.individual_banister_model)
+        for val in self.individual_banister_model['x']:
             print(val)
-        return individual_banister_model
+        return self.individual_banister_model
