@@ -7,7 +7,7 @@ import json
 #                  ,'bounds':      [(.1,1.90), (.1,2.90), (50,70), (30,50), (5,12)]}
 
 
-class banister(object):
+class banister_model(object):
     def __init__(self, params, ctlatl_start=0):
         self.params = params
         self.ctls = []
