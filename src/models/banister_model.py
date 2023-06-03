@@ -41,7 +41,7 @@ class banister_model(object):
         return MAE
     
     def fit(self, load_metric, performance_metric, initial_guess, bounds=bounds):
-        self.individual_banister_model = optimize.minimize(optimize_banister
+        self.individual_banister_model = optimize.minimize(self.optimize_banister
                                                     ,x0=initial_guess
                                                     ,bounds=bounds
                                                     # ,method='Nelder-Mead'
