@@ -43,12 +43,13 @@ class banister_model(object):
     def train(self, load_metric, performance_metric, initial_guess, bounds):
         self.load_metric = load_metric
         self.performance_metric = performance_metric
-        self.individual_banister_model = optimize.minimize(self.optimize_banister
-                                                    ,x0=initial_guess
-                                                    ,bounds=bounds
-                                                    # ,method='Nelder-Mead'
-                                                    # ,tol=1e-8
-                                                    )
+        self.individual_banister_model = optimize.minimize(
+            self.optimize_banister
+            ,x0=initial_guess
+            ,bounds=bounds
+            # ,method='Nelder-Mead'
+            # ,tol=1e-8
+            )
         print(self.individual_banister_model)
         # for val in self.individual_banister_model['x']:
         #     print(val)
