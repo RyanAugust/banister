@@ -4,22 +4,26 @@ from pathlib import Path
 from banister_model import banister_model
 import pandas as pd
 import numpy as np
+import yaml
+
+with open("config/config.yaml", "r") as f:
+    trian_config = yaml.safe_load(f)['train']
 
 
 def main():
     ## load processed data 
-    data = pd.read_csv('data/processed/banister_data.csv')
-    print(data)
+    data = pd.read_csv('data\processed\processed_activity_data.csv')
+    print('> Data Loaded')
     # Establish model
     model = banister_model(ctlatl_start=0)
 
     # Train model on loaded data
-    mf = model.fit(
-        loat_metric=data['load_metric']
-        ,performance_metric=data['performance_metric']
-                    #   k1         , k2        , p0        , CTLS      , ATLS
-        ,initial_guess=[0.1        , 0.5       , 50        , 45        , 7     ]
-        ,bounds=       [(.1,1.90)  , (.1,2.90) , (50,70)   , (30,50)   , (5,12)])
+    print('> Training...')
+    mf = model.train(
+        load_metric        =data['load_metric'],
+        performance_metric =data['performance_metric'],
+        initial_guess      =trian_config['initial_guess'],
+        bounds             =trian_config['bounds'])
     return mf
 
 
@@ -34,5 +38,7 @@ if __name__ == '__main__':
     # load up the .env entries as environment variables
     # load_dotenv(find_dotenv())
 
-    main()
+    mf = main()
+    params = ', '.join([f'{val:0.4f}' for val in mf['x'].tolist()])
+    print(f"Params: {params}")
 

@@ -30,17 +30,19 @@ class banister_model(object):
 
         return Banister_Predictions
     
-    def optimize_banister(self, load_metric, performance_metric, params):
-        valid_perf_idx = performance_metric > 0 # protects fitting for only rows where there is a performance test
+    def optimize_banister(self, params):
+        valid_perf_idx = self.performance_metric > 0 # protects fitting for only rows where there is a performance test
         losses = []
 
-        Banister_Predictions = self.model(load_metric, params=params)
+        Banister_Predictions = self.model(self.load_metric, params=params)
         
-        losses = abs(performance_metric[valid_perf_idx] - Banister_Predictions[valid_perf_idx])
+        losses = abs(self.performance_metric[valid_perf_idx] - Banister_Predictions[valid_perf_idx])
         MAE = np.mean(losses)
         return MAE
     
-    def fit(self, load_metric, performance_metric, initial_guess, bounds=bounds):
+    def train(self, load_metric, performance_metric, initial_guess, bounds):
+        self.load_metric = load_metric
+        self.performance_metric = performance_metric
         self.individual_banister_model = optimize.minimize(self.optimize_banister
                                                     ,x0=initial_guess
                                                     ,bounds=bounds
@@ -48,6 +50,6 @@ class banister_model(object):
                                                     # ,tol=1e-8
                                                     )
         print(self.individual_banister_model)
-        for val in self.individual_banister_model['x']:
-            print(val)
+        # for val in self.individual_banister_model['x']:
+        #     print(val)
         return self.individual_banister_model

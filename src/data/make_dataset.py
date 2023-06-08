@@ -6,7 +6,10 @@ from pathlib import Path
 
 import CheetahPyAnalytics
 import pandas as pd
+import yaml
 
+with open("config/config.yaml", "r") as f:
+    data_config = yaml.safe_load(f)['dataset']
 
 # @click.command()
 # @click.argument('input_filepath', type=click.Path(exists=True))
@@ -29,8 +32,15 @@ def main(input_filepath, output_filepath):
                                  ,'pmax': 642}}
 
     datapp = CheetahPyAnalytics.dataset_preprocess(local_activity_store=input_filepath)
-    datapp.pre_process(load_metric="Daily_TSS", performance_metric="VO2", fill_performance_forward=False)
-
+    
+    print('Building Dataset using...\nload metric:\t{load_metric}\nperformance metric:\t{performance_matric}'.format(load_metric=data_config['load_metric'],
+                                                                                                                     performance_matric=data_config['performance_metric']))
+    datapp.pre_process(load_metric=data_config['load_metric'],
+                    performance_metric=data_config['performance_metric'],
+                    filter_sport=['Bike'],
+                    fill_performance_forward=False)
+    # mean_ = datapp.activity_data['performance_metric'].mean()
+    print(f'mean peformance: {datapp.activity_data["performance_metric"].mean():0.3f}')
     datapp.processed_activity_data.to_csv(output_filepath)
 
 if __name__ == '__main__':
