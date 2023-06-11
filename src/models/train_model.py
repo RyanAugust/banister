@@ -31,12 +31,16 @@ def main(input_data_path):
     return mf
 
 def model_performance_plot(true_performance, predicted_performance):
+    print('> Plotting...')
     import matplotlib.pyplot as plt
     fig, ax = plt.subplots(1,1, figsize=(10,6), dpi=200)
     true_az = true_performance[true_performance > 0]
     pred_az = predicted_performance[true_performance > 0]
-    ax.scatter(true_az.index, true_az, color='blue', alpha=.5, label='True Performance')
-    ax.scatter(true_az.index, pred_az, color='red', alpha=.5, label='Predicted Performance')
+    ax.scatter(true_az.index, true_az, s=10, color='blue', alpha=0.5, label='True Performance')
+    ax.scatter(true_az.index, pred_az, s=10, color='red', alpha=0.5, label='Predicted Performance')
+    for t_idx, t_val, p_val in zip(true_az.index, true_az.values ,pred_az):
+        ax.plot([t_idx,t_idx],[t_val, p_val], color='black',ls='--', lw=1, alpha=0.5)
+
     ax.legend()
     fig.savefig('performance_plot.png')
 
