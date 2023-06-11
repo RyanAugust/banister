@@ -13,4 +13,5 @@ python-dotenv>=0.5.1
 numpy
 scipy
 pandas
+matplotlib
 git+https://github.com/RyanAugust/CheetahPyAnalytics.git
