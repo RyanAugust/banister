@@ -10,9 +10,9 @@ with open("config/config.yaml", "r") as f:
     trian_config = yaml.safe_load(f)['train']
 
 
-def main():
+def main(input_data_path):
     ## load processed data 
-    data = pd.read_csv('data\processed\processed_activity_data.csv')
+    data = pd.read_csv(input_data_path)
     print('> Data Loaded')
     # Establish model
     model = banister_model(ctlatl_start=0)
@@ -33,12 +33,13 @@ if __name__ == '__main__':
 
     # not used in this stub but often useful for finding various files
     project_dir = Path(__file__).resolve().parents[2]
+    input_data_path = Path.joinpath(project_dir, 'data/processed/processed_activity_data.csv')
 
     # find .env automagically by walking up directories until it's found, then
     # load up the .env entries as environment variables
     # load_dotenv(find_dotenv())
 
-    mf = main()
+    mf = main(input_data_path=input_data_path)
     params = ', '.join([f'{val:0.4f}' for val in mf['x'].tolist()])
     print(f"Params: {params}")
 
