@@ -24,7 +24,24 @@ def main(input_data_path):
         performance_metric =data['performance_metric'],
         initial_guess      =trian_config['initial_guess'],
         bounds             =trian_config['bounds'])
+    if trian_config['output_plot']:
+        predicted_performance = model.model(load_metric=data['load_metric'], params=mf['x'])
+        model_performance_plot(true_performance=data['performance_metric'],
+                               predicted_performance=predicted_performance)
     return mf
+
+def model_performance_plot(true_performance, predicted_performance):
+    import matplotlib.pyplot as plt
+    fig, ax = plt.subplots(1,1, figsize=(10,6), dpi=200)
+    true_az = true_performance[true_performance > 0]
+    pred_az = predicted_performance[true_performance > 0]
+    ax.scatter(true_az.index, true_az, color='blue', alpha=.5, label='True Performance')
+    ax.scatter(true_az.index, pred_az, color='red', alpha=.5, label='Predicted Performance')
+    ax.legend()
+    fig.savefig('performance_plot.png')
+
+
+
 
 
 if __name__ == '__main__':
