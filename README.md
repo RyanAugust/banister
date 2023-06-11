@@ -3,6 +3,12 @@ Banister
 
 Simple implimentation of banister model solver with an emphasis on the ability to experiment with different load and "performance" metrics.
 
+## Execution
+
+1. Customize the `config.yaml` file to your spec. for the most part this means setting the load and performance metrics here. Load and performance metrics for now should be chosen based on the values made available in the `CheetahPyAnalytics` package such that aggregation is accurate. Later versions of this model will enable hot encoding of metric calculations such that you can define your own (ie bring your own metric philosophy).
+2. Run the `make_dataset` script by using `python src/data/make_dataset.py`. This will take your original activity level data from the `data/raw` dir and generate a file in the `processed` subdirectory, which is ready for model input.
+3. Run the `train_model` script by using `python src/models/train_model.py`. This will train the banister model using the processed data generated in step 2 and will output both the parameters of the model and (if set in the config) a plot of true versus predicted performance measures to give you an idea of the model's accuracy versus your own data.
+
 ## FAQ
 ___
 **What is a load metric and which one should I use?**
