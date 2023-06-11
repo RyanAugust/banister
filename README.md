@@ -1,9 +1,10 @@
-banister
+Banister
 ==============================
 
 Simple implimentation of banister model solver with an emphasis on the ability to experiment with different load and "performance" metrics.
 
 ## FAQ
+___
 **What is a load metric and which one should I use?**
 
 Load metrics are any measure of exertion an athlete undertakes via their training. In it's most simple form a 'metric' such as precieved exertion can be used. A more advanced or involved metric may be something like TSS (popularized by Andy Coggan with endurance athletes). When beginning, use whatever is available to you. As you progress, begin to learn more about devices that are specific to your sport and can provide **accurate and objective** measures of effort/load (such as power meters or heart rate straps).
